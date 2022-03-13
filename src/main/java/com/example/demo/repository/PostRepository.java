@@ -10,6 +10,7 @@ import java.util.Optional;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
 
+    //SELECT * FROM POST as p WHERE User='user' SORT DESC
     Optional<Post> findAllByUserOrderByCreatedDateDesc(User user);
 
     Optional<Post> findByOrderByCreatedDateDesc();
