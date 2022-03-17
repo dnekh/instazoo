@@ -47,6 +47,7 @@ public class UserService {
         }
     }
 
+    //Method for user data updating
     public User updateUser(UserDTO userDTO, Principal principal) {
         User user = getUserByPrincipal(principal);
         user.setName(userDTO.getFirstname());
@@ -55,6 +56,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    //Method for getting current user
     public User getCurrentUser(Principal principal) {
         return getUserByPrincipal(principal);
     }
