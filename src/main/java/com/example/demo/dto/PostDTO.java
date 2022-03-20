@@ -7,12 +7,12 @@ import java.util.Set;
 @Data
 public class PostDTO {
 
-    private String id;
+    private Long id;
     private String title;
     private String caption;
     private String location;
     private String username;
-    private String likes;
+    private Integer likes;
     private Set<String> userLiked;
 
 }
