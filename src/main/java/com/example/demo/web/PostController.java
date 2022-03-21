@@ -13,7 +13,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import javax.validation.*;
 import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,7 +30,7 @@ public class PostController {
     @Autowired
     private ResponseErrorValidation responseErrorValidation;
 
-    @GetMapping("/creat")
+    @PostMapping("/creat")
     public ResponseEntity<Object> createPost(@Valid @RequestBody PostDTO postDTO, BindingResult bindingResult, Principal principal) {
         ResponseEntity<Object> errors = responseErrorValidation.mapValidationService(bindingResult);
         if (!ObjectUtils.isEmpty(errors)) {
@@ -63,7 +63,7 @@ public class PostController {
         return new ResponseEntity<>(postDTOList, HttpStatus.OK);
     }
 
-    @GetMapping("/{postId}/{username}/like")
+    @PostMapping("/{postId}/{username}/like")
     public ResponseEntity<PostDTO> likePost(@PathVariable("postId") String postId, @PathVariable("username") String username) {
         Post post = postService.likePost(Long.parseLong(postId), username);
         PostDTO postDTO = postFacade.postToPostDTO(post);
@@ -71,7 +71,7 @@ public class PostController {
         return new ResponseEntity<>(postDTO, HttpStatus.OK);
     }
 
-    @GetMapping("/{postId}/delete")
+    @PostMapping("/{postId}/delete")
     public ResponseEntity<MessageResponse> deletePost(@PathVariable("postId") String postId, Principal principal) {
         postService.deletePost(Long.parseLong(postId), principal);
         return new ResponseEntity<>(new MessageResponse("Post was deleted"), HttpStatus.OK);

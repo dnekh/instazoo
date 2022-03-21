@@ -7,15 +7,13 @@ import com.example.demo.payload.response.MessageResponse;
 import com.example.demo.services.CommentService;
 import com.example.demo.validations.ResponseErrorValidation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
-import org.springframework.core.SpringVersion;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import javax.validation.*;
 import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,7 +30,7 @@ public class CommentController {
     @Autowired
     private ResponseErrorValidation responseErrorValidation;
 
-    @GetMapping("/{postId}/create")
+    @PostMapping("/{postId}/create")
     public ResponseEntity<Object> createComment(@Valid @RequestBody CommentDTO commentDTO, @PathVariable("postId") String postId,
                                                 BindingResult bindingResult,
                                                 Principal principal) {
@@ -48,7 +46,7 @@ public class CommentController {
     }
 
     @GetMapping("/{postId}/all")
-    public ResponseEntity<List<CommentDTO>> getAllCommentsForPost(@PathVariable("postId") String postId) {
+    public ResponseEntity<List<CommentDTO>> getAllCommentsToPost(@PathVariable("postId") String postId) {
         List<CommentDTO> commentDTOList = commentService.getAllCommentsForPost(Long.parseLong(postId))
                 .stream()
                 .map(commentFacade::commentToCommentDTO)
@@ -57,7 +55,7 @@ public class CommentController {
         return new ResponseEntity<>(commentDTOList, HttpStatus.OK);
     }
 
-    @GetMapping("/{commentId}/delete")
+    @PostMapping("/{commentId}/delete")
     public ResponseEntity<MessageResponse> deleteComment(@PathVariable("commentId") String commentId) {
         commentService.deleteComment(Long.parseLong(commentId));
         return new ResponseEntity<>(new MessageResponse("Post was deleted"), HttpStatus.OK);
