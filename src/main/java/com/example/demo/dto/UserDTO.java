@@ -2,7 +2,7 @@ package com.example.demo.dto;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.*;
 
 @Data
 public class UserDTO {
@@ -12,7 +12,6 @@ public class UserDTO {
     private String firstname;
     @NotEmpty
     private String lastname;
-    @NotEmpty
     private String username;
     private String bio;
 
